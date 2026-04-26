@@ -1,5 +1,4 @@
-# DungeonCrawler
-# Dungeon Crawler 2026 ⚔️
+# Dungeon Crawler ⚔️
 
 Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygiais, sukurtas naudojant **Python** ir **Pygame**. Tai objektinio orientuoto programavimo (OOP) kursinis projektas.
 
