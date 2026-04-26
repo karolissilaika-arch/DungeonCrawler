@@ -4,7 +4,7 @@ Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygia
 
 ---
 
-## 1. Introduction
+## 1. Įžanga
 
 * **Kas yra ši programa?**
     Tai yra 2D veiksmo žaidimas, kuriame žaidėjas valdo riterį, kovojantį su požemių priešais. Žaidimo esmė – panaudoti „Dash“ mechaniką priešų naikinimui ir kilti per vis sudėtingesnius lygius.
@@ -19,7 +19,7 @@ Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygia
 
 ---
 
-## 2. Body/Analysis 
+## 2. Žaidimo analizė 
 
 Žaidimas sukurtas taikant **OOP principus**, užtikrinant kodo skaitomumą ir plečiamumą.
 
@@ -33,21 +33,21 @@ Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygia
 
 ---
 
-## 3. Results and Summary (Rezultatai ir Išvados)
+## 3. Rezultatai ir išvados
 
-### Results (Rezultatai)
+### Rezultatai
 * **Pasiekta:** Sukurta stabili žaidimo versija su progresuojančiu sudėtingumu (didėjantis priešų skaičius).
 * **Iššūkiai:** Sunkiausia buvo subalansuoti priešų greitį ir žaidėjo „Dash“ atstumą, kad žaidimas būtų reikiamo sudėtingumo.
 * **Sprendimai:** Klaidų taisymo metu buvo pridėti saugikliai (try-except blokai) grafikos užkrovimui, kad programa „necrashintų“ neradus failo.
 
-### Conclusions (Išvados)
+### Išvados
 * Programa sėkmingai demonstruoja Python panaudojimą interaktyvių programų kūrimui.
 * Šis projektas pasitarnavo kaip praktinis pavyzdys, kaip OOP principai padeda valdyti sudėtingą programos būseną (State management: Playing, Game Over).
 * **Ateities perspektyvos:** Galima pridėti garsų sistemą, skirtingus ginklų tipus ir labiau pažangų AI.
 
 ---
 
-## 4. Resources (Ištekliai)
+## 4. Ištekliai
 
 * **Variklis:** [Pygame Library](https://www.pygame.org/)
 * **Grafika:** Autoriniai Pixel Art resursai ir modifikuoti laisvai prieinami sprite'ai.
