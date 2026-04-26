@@ -2,7 +2,7 @@ import pygame
 import random
 import sys
 
-# --- KONSTANTOS ---
+#Konstantos
 TILE_SIZE = 32
 GRID_WIDTH, GRID_HEIGHT = 20, 20
 SCREEN_WIDTH = GRID_WIDTH * TILE_SIZE
@@ -16,10 +16,9 @@ COLORS = {
     "dash_indicator": (255, 255, 0)
 }
 
-# --- 1. BAZINĖ KLASĖ ---
+# Bazinė klasė
 class GameObject:
     def __init__(self, x, y, image_file=None):
-        # Rect naudojamas kolizijoms (šiek tiek sumažintas sklandumui)
         self.rect = pygame.Rect(x * TILE_SIZE + 6, y * TILE_SIZE + 6, TILE_SIZE - 12, TILE_SIZE - 12)
         
         if image_file:
@@ -27,21 +26,18 @@ class GameObject:
                 self.image = pygame.image.load(image_file).convert_alpha()
                 self.image = pygame.transform.scale(self.image, (TILE_SIZE, TILE_SIZE))
             except:
-                print(f"KLAIDA: Nepavyko rasti {image_file}. Naudojamas kvadratas.")
                 self.image = None
         else:
             self.image = None
-        
         self.fallback_color = (200, 200, 200)
 
     def draw(self, surface):
         if self.image:
-            # Piešiame paveiksliuką tikroje tinklelio pozicijoje
             surface.blit(self.image, (self.rect.x - 6, self.rect.y - 6))
         else:
             pygame.draw.rect(surface, self.fallback_color, self.rect)
 
-# --- 2. ŽAIDIMO OBJEKTAI ---
+# Subklasės
 class Wall(GameObject):
     def __init__(self, x, y):
         super().__init__(x, y, "wall.png")
@@ -69,7 +65,6 @@ class Enemy(GameObject):
         dx = self._speed if self.rect.x < player_rect.x else -self._speed if self.rect.x > player_rect.x else 0
         dy = self._speed if self.rect.y < player_rect.y else -self._speed if self.rect.y > player_rect.y else 0
 
-        # Protingas judėjimas: X ir Y tikrinami atskirai, kad neužstrigtų kampuose
         if dx != 0:
             target_x = self.rect.move(dx, 0)
             if not any(w.rect.colliderect(target_x) for w in walls):
@@ -100,17 +95,30 @@ class Player(GameObject):
             self.dash_timer -= 1
             if self.dash_timer <= 0: self.is_dashing = False
 
-        # Įstrižas judėjimas ir kolizijų tikrinimas
+        # Teleportacija
         if dx != 0:
-            new_x = (self.rect.x + dx * speed) % SCREEN_WIDTH
-            if not any(w.rect.colliderect(pygame.Rect(new_x, self.rect.y, self.rect.width, self.rect.height)) for w in walls):
+            new_x = self.rect.x + dx * speed
+            if new_x < 0: 
+                new_x = SCREEN_WIDTH - self.rect.width - 2
+            elif new_x > SCREEN_WIDTH - self.rect.width:
+                new_x = 2
+                
+            test_rect = pygame.Rect(new_x, self.rect.y, self.rect.width, self.rect.height)
+            if not any(w.rect.colliderect(test_rect) for w in walls):
                 self.rect.x = new_x
+
         if dy != 0:
-            new_y = (self.rect.y + dy * speed) % SCREEN_HEIGHT
-            if not any(w.rect.colliderect(pygame.Rect(self.rect.x, new_y, self.rect.width, self.rect.height)) for w in walls):
+            new_y = self.rect.y + dy * speed
+            if new_y < 0:
+                new_y = SCREEN_HEIGHT - self.rect.height - 2
+            elif new_y > SCREEN_HEIGHT - self.rect.height:
+                new_y = 2
+                
+            test_rect = pygame.Rect(self.rect.x, new_y, self.rect.width, self.rect.height)
+            if not any(w.rect.colliderect(test_rect) for w in walls):
                 self.rect.y = new_y
 
-# --- 3. VALDYMAS ---
+# Valdymas
 class DungeonManager:
     def __init__(self):
         self.walls, self.enemies, self.items, self.empty_slots = [], [], [], []
@@ -140,10 +148,15 @@ class DungeonManager:
             else: self.player = Player(found_p[0], found_p[1])
         elif not self.player: self.player = Player(1, 1)
 
+        # Ištriname bet kokias sienas po žaidėju
+        self.walls = [w for w in self.walls if not w.rect.colliderect(self.player.rect)]
+
         random.shuffle(self.empty_slots)
         for _ in range(min(extra_enemies, len(self.empty_slots))):
             ex, ey = self.empty_slots.pop()
-            self.enemies.append(Enemy(ex, ey))
+            e = Enemy(ex, ey)
+            if not e.rect.colliderect(self.player.rect):
+                self.enemies.append(e)
 
     def spawn_item(self):
         if self.empty_slots:
@@ -154,7 +167,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("OOP Dungeon Crawler 2026")
+        pygame.display.set_caption("Dungeon Crawler 2026")
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 20)
         self.manager = DungeonManager()
@@ -164,13 +177,10 @@ class Game:
 
     def draw_ui(self):
         p = self.manager.player
-        # HP bar
         pygame.draw.rect(self.screen, COLORS["hp_bg"], (10, 10, 200, 15))
         if p.hp > 0: pygame.draw.rect(self.screen, COLORS["hp_bar"], (10, 10, 200*(p.hp/100), 15))
-        # Dash indicator
         dot_c = COLORS["dash_indicator"] if p.has_dash else (50, 50, 50)
         pygame.draw.circle(self.screen, dot_c, (230, 17), 8)
-        # Level info
         txt = self.font.render(f"Lvl: {self.level} | Enemies: {len(self.manager.enemies)}", True, COLORS["text"])
         self.screen.blit(txt, (SCREEN_WIDTH-150, 10))
 
@@ -182,8 +192,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and self.state == "PLAYING": self.manager.player.start_dash()
                     if event.key == pygame.K_r and self.state == "GAMEOVER":
-                        self.level, self.manager.player, self.state = 1, None, "PLAYING"
-                        self.manager.load_map(self.segments)
+                        self.__init__()
 
             if self.state == "PLAYING" and self.manager.player:
                 self.spawn_timer += dt
@@ -215,9 +224,8 @@ class Game:
                             if self.manager.player.hp <= 0: self.state = "GAMEOVER"
 
             self.screen.fill(COLORS["bg"])
-            for w in self.manager.walls: w.draw(self.screen)
-            for i in self.manager.items: i.draw(self.screen)
-            for e in self.manager.enemies: e.draw(self.screen)
+            for obj in self.manager.walls + self.manager.items + self.manager.enemies:
+                obj.draw(self.screen)
             if self.manager.player: self.manager.player.draw(self.screen)
             self.draw_ui()
             if self.state == "GAMEOVER":
