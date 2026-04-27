@@ -25,14 +25,14 @@ Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygia
 
 ### Funkcinių reikalavimų įgyvendinimas:
 * **Paveldėjimas:** Visos žaidimo klasės (`Player`, `Enemy`, `Wall`, `DashItem`) paveldi bazinę `GameObject` klasę. Tai leidžia centralizuotai valdyti objektų atvaizdavimą ir kolizijų rėmus (`rect`).
-* <img width="530" height="224" alt="image" src="https://github.com/user-attachments/assets/e3944a43-5a66-401c-bb6a-b26c5a582d65" />
+ <img width="530" height="224" alt="image" src="https://github.com/user-attachments/assets/e3944a43-5a66-401c-bb6a-b26c5a582d65" />
 * **Inkapsuliacija:** Žaidėjo hp ir is_dashing kintamieji yra inkapsuliuoti klasės viduje. Išorinis pasaulis (žaidimo ciklas) nežino, kaip tiksliai veikia „dash“ mechanika, jis tik duoda komandą pradėti.
-* <img width="367" height="235" alt="image" src="https://github.com/user-attachments/assets/93094e84-20c3-4ad0-8dfc-aafbb4a86b73" />
+ <img width="367" height="235" alt="image" src="https://github.com/user-attachments/assets/93094e84-20c3-4ad0-8dfc-aafbb4a86b73" />
 * **Polimorfizmas:** Šis principas leidžia naudoti tą patį metodą skirtingiems objektams. Pavyzdžiui, pagrindiniame cikle aš tiesiog kviečiu .draw(self.screen) visiems objektams iš eilės, nesvarbu, ar tai siena, ar priešas – kiekvienas objektas žino, kaip save nupiešti.
-* <img width="594" height="36" alt="image" src="https://github.com/user-attachments/assets/fd7cdef6-b3bc-4605-839f-225d69d0e5fd" />
+ <img width="594" height="36" alt="image" src="https://github.com/user-attachments/assets/fd7cdef6-b3bc-4605-839f-225d69d0e5fd" />
 * **Abstrakcija:** Vartotojui (arba pagrindiniam žaidimo ciklui) nereikia žinoti sudėtingų detalių apie tai, kaip veikia žemėlapio generavimas ar teleportacijos logika. Viskas paslėpta po paprastais metodais, tokiais kaip manager.load_map() arba player.update().
-* <img width="400" height="31" alt="image" src="https://github.com/user-attachments/assets/edfd18fb-2534-4eda-8c59-e8bc95b8b67f" />
-* <img width="384" height="101" alt="image" src="https://github.com/user-attachments/assets/9b33c7af-39ad-4518-8486-1d60e64429a3" />
+ <img width="400" height="31" alt="image" src="https://github.com/user-attachments/assets/edfd18fb-2534-4eda-8c59-e8bc95b8b67f" />
+ <img width="384" height="101" alt="image" src="https://github.com/user-attachments/assets/9b33c7af-39ad-4518-8486-1d60e64429a3" />
 
 
 
