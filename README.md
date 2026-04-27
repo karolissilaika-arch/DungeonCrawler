@@ -26,6 +26,7 @@ Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygia
 ### Funkcinių reikalavimų įgyvendinimas:
 * **Paveldėjimas:** Visos žaidimo klasės (`Player`, `Enemy`, `Wall`, `DashItem`) paveldi bazinę `GameObject` klasę. Tai leidžia centralizuotai valdyti objektų atvaizdavimą ir kolizijų rėmus (`rect`).
  <img width="530" height="224" alt="image" src="https://github.com/user-attachments/assets/e3944a43-5a66-401c-bb6a-b26c5a582d65" />
+ 
 * **Inkapsuliacija:** Žaidėjo hp ir is_dashing kintamieji yra inkapsuliuoti klasės viduje. Išorinis pasaulis (žaidimo ciklas) nežino, kaip tiksliai veikia „dash“ mechanika, jis tik duoda komandą pradėti.
  <img width="367" height="235" alt="image" src="https://github.com/user-attachments/assets/93094e84-20c3-4ad0-8dfc-aafbb4a86b73" />
 * **Polimorfizmas:** Šis principas leidžia naudoti tą patį metodą skirtingiems objektams. Pavyzdžiui, pagrindiniame cikle aš tiesiog kviečiu .draw(self.screen) visiems objektams iš eilės, nesvarbu, ar tai siena, ar priešas – kiekvienas objektas žino, kaip save nupiešti.
