@@ -39,6 +39,11 @@ Paprastas 2D požemių tyrinėjimo žaidimas su atsitiktinai generuojamais lygia
 
  * **Projektavimo modelis: Facade** Projekte pritaikytas Facade projektavimo modelis, kurį reprezentuoja DungeonManager klasė. Šis modelis naudojamas siekiant suteikti paprastą sąsają sudėtingai posistemei valdyti. Užuot visą šią logiką bunant pagrindinėje Game klasėje, viskas paslėpta po DungeonManager fasadu. Pagrindinėje klasėje užtenka iškviesti vieną metodą, ir DungeonManager klasė padarys visą kitą.
   <img width="272" height="34" alt="image" src="https://github.com/user-attachments/assets/5ae22c9e-eba3-4081-82bd-83b460cdc727" />
+* **Kompozicija** Čia Game objekte sukuriamas DungeonManager. Jei žaidimas uždaromas, jis nustoja egzistuoti.
+  <img width="295" height="131" alt="image" src="https://github.com/user-attachments/assets/02d5ba3e-349c-4d19-9d4f-be831f54138b" />
+* **Agregacija** DungeonManager „turi“ (agreguoja) sienas ir priešus.
+ <img width="553" height="75" alt="image" src="https://github.com/user-attachments/assets/888c0c9d-40d1-4129-8bda-7951311ba99b" />
+
 
 
 
